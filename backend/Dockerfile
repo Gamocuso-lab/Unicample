@@ -8,6 +8,8 @@ WORKDIR /app
 COPY ./app /app/app
 COPY requirements.txt /app
 
+COPY templates /app/templates
+
 # Instalar dependências
 RUN pip install --no-cache-dir -r requirements.txt
 
