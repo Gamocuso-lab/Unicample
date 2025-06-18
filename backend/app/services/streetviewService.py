@@ -26,5 +26,6 @@ class StreetviewService(metaclass=SingletonMeta):
             "request": request,
             "google_maps_api_key": key,
             "lat": lat, 
-            "lng": lng
+            "lng": lng,
+            "blur": 10
         })
