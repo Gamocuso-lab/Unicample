@@ -7,4 +7,5 @@ class Local(SQLModel, table=True):
     nome: str = Field(index=True, nullable=False)
 
     # Relacionamentos
-    localizacao: list["Localizacao"] = Relationship(back_populates="local")
+    localizacao: list["Coordenada"] = Relationship(back_populates="local")
+    localizacao: list["Imagem"] = Relationship(back_populates="local")
