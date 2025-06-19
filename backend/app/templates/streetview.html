@@ -4,37 +4,278 @@
     <title>Street View - Visualização Fixa</title>
     <meta charset="utf-8" />
     <style>
+      @import url("https://fonts.googleapis.com/css2?family=Michroma&display=swap");
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+      }
+
       #street-view {
         height: 100vh;
-        width: 100%;
+        width: 100vw;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
       }
       canvas.mapsConsumerUiSceneCoreScene__canvas.widget-scene-canvas {
-      filter: blur({{blur}}px);
+        filter: blur({{blur}}px);
+      }
+      #open_dropdown_panel {
+        font-family: "Michroma", sans-serif;
+        font-weight: 700;
+        background-color: rgba(221, 66, 45, 0.95);
+        color: White;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+        padding: 30px 45px;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+      }
+      #open_dropdown_panel.fade-out {
+        opacity: 0;
+        visibility: hidden;
+      }
+      #right_panel {
+        position: fixed;
+        top: 0;
+        right: -400px;
+        width: 400px;
+        height: 100%;
+        background-color: rgba(221, 66, 45, 0.95);
+        transition: right 0.3s ease-out;
+        z-index: 999;
+        padding: 20px;
+        box-sizing: border-box;
+        overflow-y: auto;
+      }
+      #right_panel.open {
+        right: 0;
+      }
+      #close_panel_button {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: #ffffff;
+      }
+      #close_panel_button:hover {
+        color: #000;
+      }
+      #custom_dropdown_list_container {
+        font-family: "Michroma", sans-serif;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        max-height: 340px;
+        overflow-y: auto;
+        background-color: #fff;
+        margin-top: 0px;
+      }
+
+      #custom_dropdown_list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      #custom_dropdown_list li {
+        padding: 8px 10px;
+        font-weight: 700;
+
+        cursor: pointer;
+        user-select: none;
+      }
+
+      #custom_dropdown_list li:hover {
+        background-color: #e9e9e9;
+      }
+
+      #custom_dropdown_list li.selected {
+        background-color: #fb7a56;
+        color: white;
+      }
+      #chute_value {
+        font-family: "Michroma", sans-serif;
+
+        border-radius: 8px;
+
+        height: 30px;
+        width: 350px;
+        text-align: center;
+        font-size: 0.9em;
+      }
+      #label_chute {
+        font-family: "Michroma", sans-serif;
+        font-size: 2em;
+        color: white;
+        display: block;
+        text-align: center;
+        font-weight: 700;
+        text-shadow: -1.2px -1.2px 0 #000, 1.2px -1.2px 0 #000,
+          -1.2px 1.2px 0 #000, 1px 1px 0 #000;
+      }
+      button[type="submit"] {
+        font-family: "Michroma", sans-serif;
+        padding: 10px 15px;
+        font-size: 1.2em;
+        width: 60%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        border: none;
+        font-weight: 700;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button[type="submit"]:hover {
+        font-weight: 700;
+        background-color: rgba(235, 93, 74, 0.95);
+        color: white;
       }
     </style>
   </head>
   <body>
     <div id="street-view"></div>
+    <button id="open_dropdown_panel" style="font-size: 1.4em">
+      Fazer chute!
+    </button>
+
+    <div id="right_panel">
+      <button id="close_panel_button">&times;</button>
+      <form>
+        <label id="label_chute" for="chute_value">Onde Estamos?</label><br />
+        <input
+          type="text"
+          id="chute_value"
+          name="chute_value"
+          placeholder="Ex.: Instituto da Computação"
+        /><br /><br />
+
+        <div id="custom_dropdown_list_container">
+          <ul id="custom_dropdown_list">
+            <li data-value="ia">Instituto de Artes (IA)</li>
+            <li data-value="ic">Instituto de Computação (IC)</li>
+            <li data-value="ib">Instituto de Biologia (IB)</li>
+            <li data-value="fef">Faculdade de Educação Física (FEF)</li>
+            <li data-value="fcm">Faculdade de Ciências Médicas (FCM)</li>
+            <li data-value="fcf">Faculdade de Ciências Farmacêuticas (FCF)</li>
+            <li data-value="fop">
+              Faculdade de Odontologia de Piracicaba (FOP)
+            </li>
+            <li data-value="agr">Faculdade de Engenharia Agrícola (FEAGRI)</li>
+            <li data-value="arq">
+              Faculdade de Engenharia Civil, Arquitetura e Urbanismo (FECFAU)
+            </li>
+            <li data-value="eel">
+              Faculdade de Engenharia Elétrica e de Computação (FEEC)
+            </li>
+            <li data-value="ali">Faculdade de Engenharia de Alimentos (FEA)</li>
+            <li data-value="quim">Faculdade de Engenharia Química (FEQ)</li>
+            <li data-value="mec">Faculdade de Engenharia Mecânica (FEM)</li>
+            <li data-value="civil">
+              Faculdade de Engenharia Civil, Arquitetura e Urbanismo (FECFAU)
+            </li>
+            <li data-value="fis">Instituto de Física "Gleb Wataghin" (IFGW)</li>
+            <li data-value="quim">Instituto de Química (IQ)</li>
+            <li data-value="mat">
+              Instituto de Matemática, Estatística e Computação Científica
+              (IMECC)
+            </li>
+            <li data-value="geo">Instituto de Geociências (IG)</li>
+            <li data-value="fil">
+              Instituto de Filosofia e Ciências Humanas (IFCH)
+            </li>
+            <li data-value="eco">Instituto de Economia (IE)</li>
+            <li data-value="edu">Faculdade de Educação (FE)</li>
+            <li data-value="lnls">
+              Laboratório Nacional de Luz Síncrotron (LNLS)
+            </li>
+            <li data-value="cnpem">
+              Centro Nacional de Pesquisa em Energia e Materiais (CNPEM)
+            </li>
+            <li data-value="cti">
+              Centro de Tecnologia da Informação Renato Archer (CTI)
+            </li>
+          </ul>
+        </div>
+        <input type="hidden" id="chute_options" name="chute_options" value="" />
+        <br /><br />
+
+        <button type="submit">Enviar Chute</button>
+      </form>
+    </div>
 
     <script>
       function initialize() {
-        const sv = new google.maps.StreetViewPanorama(document.getElementById("street-view"), {
-          position: { lat: {{ lat }}, lng: {{ lng }} },
-          pov: { heading: 0, pitch: 0 },
-          zoom: 1,
-          clickToGo: false,
-          disableDefaultUI: true,
-          scrollwheel: false,
-          linksControl: false,
-          panControl: false,
-          motionTracking: false
-        });
-      }
+         const sv = new google.maps.StreetViewPanorama(
+           document.getElementById("street-view"),
+           {
+             position: { lat: {{ lat }}, lng: {{ lng }} },
+             pov: { heading: 0, pitch: 0 },
+             zoom: 1,
+             clickToGo: false,
+             disableDefaultUI: true,
+             scrollwheel: false,
+             linksControl: false,
+             panControl: false,
+             motionTracking: false,
+           }
+         );
+       }
+       document.addEventListener("DOMContentLoaded", () => {
+         const openButton = document.getElementById("open_dropdown_panel");
+         const closeButton = document.getElementById("close_panel_button");
+         const rightPanel = document.getElementById("right_panel");
+
+         const customDropdownList = document.getElementById("custom_dropdown_list");
+         const hiddenChuteOptionsInput = document.getElementById("chute_options");
+
+         openButton.addEventListener("click", () => {
+           rightPanel.classList.add("open");
+           openButton.classList.add("fade-out");
+         });
+
+         closeButton.addEventListener("click", () => {
+           rightPanel.classList.remove("open");
+           openButton.classList.remove("fade-out");
+         });
+
+         customDropdownList.addEventListener("click", (event) => {
+           const clickedItem = event.target;
+
+           if (clickedItem.tagName === "LI") {
+             const currentSelected = customDropdownList.querySelector(".selected");
+             if (currentSelected) {
+               currentSelected.classList.remove("selected");
+             }
+
+             clickedItem.classList.add("selected");
+
+             hiddenChuteOptionsInput.value = clickedItem.dataset.value;
+
+           }
+         });
+       });
     </script>
 
     <script
       src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initialize"
-      async defer
+      async
+      defer
     ></script>
   </body>
 </html>
