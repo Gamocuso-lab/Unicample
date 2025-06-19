@@ -23,7 +23,7 @@ async def get_jogo_info(jogo_id: int, session: Session = Depends(get_session)) -
     return jogo_info
 
 @router.get(base_url + "/{jogo_id}/{local}")
-async def chute(jogo_id: int, local: str, session: Session = Depends(get_session)):
+async def chute(jogo_id: int, local: str, session: Session = Depends(get_session)) -> bool:
     jogo_service = JogoService()
     resultado = await jogo_service.chute(session, jogo_id, local)
     return resultado
