@@ -1,3 +1,4 @@
+from backend.app.services.rodadaService import RodadaService
 from sqlmodel import Session, select
 from app.models.coordenada import Coordenada
 from app.models.imagem import Imagem
@@ -118,7 +119,7 @@ class JogoService(metaclass=SingletonMeta):
         imagem = self.seleciona_imagem(session, local.id)
         coordenada = self.seleciona_coordenada(session, local.id)
 
-        nova_rodada = Rodada(jogo_id=jogo_id, pontuacao=0, tentativas=4, dificuldade=4, imagem_id=imagem.id, coordenada_id=coordenada.id)
+        nova_rodada = Rodada(jogo_id=jogo_id, pontuacao=0, tentativas=4, dificuldade=5, imagem_id=imagem.id, coordenada_id=coordenada.id)
 
         # Adiciona a nova rodada à sessão
         session.add(nova_rodada)
