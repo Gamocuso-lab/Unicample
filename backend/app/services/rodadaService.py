@@ -1,3 +1,7 @@
+import os
+from fastapi import Request
+from fastapi.responses import HTMLResponse
+from app.services.streetviewService import StreetviewService
 from sqlmodel import Session, select
 from app.models.rodada import Rodada
 from app.models.coordenada import Coordenada
@@ -62,9 +66,9 @@ class RodadaService(metaclass=SingletonMeta):
         if rodada.dificuldade > 1:
             rodada.dificuldade -= 1
             
-            
         if rodada.tentativas > 0:
             rodada.tentativas -= 1
+
 
         # Adiciona o objeto modificado à sessão para preparar a atualização.
         session.add(rodada)
@@ -76,3 +80,39 @@ class RodadaService(metaclass=SingletonMeta):
         session.refresh(rodada)
 
         return rodada
+    
+    def calcular_blur(self) -> int:
+        """
+        Calcula o nível de desfoque (blur) baseado na dificuldade da rodada.
+        
+        Returns:
+            int: O nível de desfoque a ser aplicado na imagem.
+        """
+        return self.dificuldade * 4
+    
+    def get_dados_rodada_atual(self, session: Session, jogo_id: int) -> dict:
+        """
+        Busca a rodada atual de um jogo e retorna seus dados essenciais 
+        para a visualização.
+        """
+        # 1. Obter a rodada atual do jogo
+        rodada_statement = select(Rodada).where(Rodada.jogo_id == jogo_id).order_by(Rodada.id.desc())
+        rodada_atual = session.exec(rodada_statement).first()
+
+        if not rodada_atual:
+            raise ValueError("Nenhuma rodada encontrada para este jogo.")
+
+        # 2. Obter a coordenada correta
+        coordenada = session.get(Coordenada, rodada_atual.coordenada_id)
+        if not coordenada:
+            raise ValueError("Coordenada não encontrada para a rodada.")
+        
+        
+        blur_level = rodada_atual.calcular_blur()
+        # 3. Montar e retornar um dicionário com os dados
+        dados_rodada = {
+            "local": f"{coordenada.lat},{coordenada.lng}",
+            "blur_level": blur_level
+        }
+        
+        return dados_rodada

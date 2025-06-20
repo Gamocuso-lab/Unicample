@@ -27,3 +27,11 @@ async def chute(jogo_id: int, local: str, session: Session = Depends(get_session
     jogo_service = JogoService()
     resultado = await jogo_service.chute(session, jogo_id, local)
     return resultado
+
+@router.get(base_url + "/{jogo_id}/streetview", response_class=HTMLResponse)
+async def get_jogo_streetview(jogo_id: int, request: Request, session: Session = Depends(get_session)):
+    """
+    Endpoint principal para visualizar a rodada atual de um jogo.
+    """
+    jogo_service = JogoService()
+    return await jogo_service.get_rodada_streetview(session, jogo_id, request)

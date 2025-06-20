@@ -1,4 +1,9 @@
-from backend.app.services.rodadaService import RodadaService
+import os
+
+from fastapi import Request
+from fastapi.responses import HTMLResponse
+from app.services.rodadaService import RodadaService
+from app.services.streetviewService import StreetviewService
 from sqlmodel import Session, select
 from app.models.coordenada import Coordenada
 from app.models.imagem import Imagem
@@ -119,7 +124,7 @@ class JogoService(metaclass=SingletonMeta):
         imagem = self.seleciona_imagem(session, local.id)
         coordenada = self.seleciona_coordenada(session, local.id)
 
-        nova_rodada = Rodada(jogo_id=jogo_id, pontuacao=0, tentativas=4, dificuldade=5, imagem_id=imagem.id, coordenada_id=coordenada.id)
+        nova_rodada = Rodada(jogo_id=jogo_id, pontuacao=0, tentativas=4, dificuldade=4, imagem_id=imagem.id, coordenada_id=coordenada.id)
 
         # Adiciona a nova rodada à sessão
         session.add(nova_rodada)
@@ -232,3 +237,33 @@ class JogoService(metaclass=SingletonMeta):
             rodadaService.diminui_dificuldade(session, rodada_id)
         
         return False
+    
+    def get_rodada_streetview(self, session: Session, jogo_id: int, request: Request) -> HTMLResponse:
+        """
+        Orquestra a criação da visualização do Street View para a rodada atual.
+        """
+        # 1. Instanciar os serviços necessários
+        rodada_service = RodadaService()
+        streetview_service = StreetviewService()
+
+        # 2. Obter os dados da rodada atual usando o RodadaService
+        dados_rodada = rodada_service.get_dados_rodada_atual(session, jogo_id)
+
+        # 3. Lógica do blur (agora reside aqui, no JogoService)
+        blur_level = dados_rodada.get("blur_level", 1)
+
+        # 4. Obter a localização
+        local_str = dados_rodada.get("local")
+        if not local_str:
+            raise ValueError("Localização não fornecida pela rodada.")
+
+        # 5. Obter a chave da API
+        api_key = os.getenv("Maps_API_KEY")
+
+        # 6. Chamar o StreetviewService para gerar o HTML final
+        return streetview_service.get_streetview_image(
+            local=local_str,
+            key=api_key,
+            request=request,
+            blur_level=blur_level
+        )
