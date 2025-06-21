@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StreetViewService } from '../../core/services/streetviewService';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-street-view',
@@ -11,25 +11,20 @@ import { StreetViewService } from '../../core/services/streetviewService';
 })
 export class StreetViewComponent {
   @Input() id_jogo: string = '';
+  safeUrl: SafeResourceUrl = '';
 
-  constructor(private streetViewService: StreetViewService) { }
+  constructor(
+    private sanitizer: DomSanitizer
+  ) { }
 
   ngOnInit() {
     if (!this.id_jogo) {
       console.error('id_jogo is not provided');
+    } else {
+      this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+        `http://localhost:8000/jogo/${this.id_jogo}/streetview`
+      );
     }
-    // Additional initialization logic can go here
-    console.log(`StreetViewComponent initialized with id_jogo: ${this.id_jogo}`);
-    // You can add logic to fetch and display the street view based on id_jogo
-    // For example, you might want to call a service to get the street view data
-    this.streetViewService.getJogoStreetView(this.id_jogo).subscribe(
-      data => {
-        document.getElementById('street-view-container')!.innerHTML = data;
-      },
-      error => {
-        console.error('Error fetching street view data:', error);
-      }
-    );
   }
 
 }
