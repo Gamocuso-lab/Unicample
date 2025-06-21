@@ -21,8 +21,6 @@ def create_local(nome):
         return response.json()["local_id"]
     except requests.exceptions.RequestException as e:
         print(f"Erro ao criar local '{nome}': {e}")
-        if response is not None:
-            print(f"Detalhes da resposta de erro: {response.text}")
         return None
 
 def create_coordenada(lat, lng, id_local):

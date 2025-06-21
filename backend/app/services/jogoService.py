@@ -278,7 +278,7 @@ class JogoService(metaclass=SingletonMeta):
             raise ValueError("Localização não fornecida pela rodada.")
 
         # 5. Obter a chave da API
-        api_key = os.getenv("Maps_API_KEY")
+        api_key = os.getenv("STREET_VIEW_KEY")
 
         # 6. Chamar o StreetviewService para gerar o HTML final
         return streetview_service.get_streetview_image(

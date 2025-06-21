@@ -81,15 +81,6 @@ class RodadaService(metaclass=SingletonMeta):
 
         return rodada
     
-    def calcular_blur(self) -> int:
-        """
-        Calcula o nível de desfoque (blur) baseado na dificuldade da rodada.
-        
-        Returns:
-            int: O nível de desfoque a ser aplicado na imagem.
-        """
-        return self.dificuldade * 4
-    
     def get_dados_rodada_atual(self, session: Session, id_jogo: int) -> dict:
         """
         Busca a rodada atual de um jogo e retorna seus dados essenciais 
@@ -107,8 +98,7 @@ class RodadaService(metaclass=SingletonMeta):
         if not coordenada:
             raise ValueError("Coordenada não encontrada para a rodada.")
         
-        
-        blur_level = rodada_atual.calcular_blur()
+        blur_level = rodada_atual.dificuldade * 4
         # 3. Montar e retornar um dicionário com os dados
         dados_rodada = {
             "local": f"{coordenada.lat},{coordenada.lng}",

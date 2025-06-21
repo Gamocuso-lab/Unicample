@@ -19,7 +19,7 @@ async def streetview(request: Request, location: str = None):
         return HTMLResponse(content="<h1>Error: API key not found</h1>", status_code=500)
     
     service = StreetviewService()
-    return service.get_streetview_image(location=location,key = api_key, request=request)
+    return service.get_streetview_image(local=location,key = api_key, request=request)
     
 
     

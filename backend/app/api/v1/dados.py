@@ -109,3 +109,41 @@ async def delete_all_coordenadas(request: Request, session: Session = Depends(ge
         print(f"Erro ao deletar coordenadas: {str(e)}")
         session.rollback()  # Reverte a transação em caso de erro
         raise HTTPException(status_code=500, detail=f"Erro interno ao deletar coordenadas: {str(e)}")
+
+
+@router.get(base_url + "/get-coordenadas", response_model=list[Coordenada])
+async def get_coordenadas(request: Request, session: Session = Depends(get_session)):
+    """
+    Endpoint para obter todas as coordenadas.
+    """
+    try:
+        coordenadas = session.query(Coordenada).all()
+        return coordenadas
+    except Exception as e:
+        print(f"Erro ao obter coordenadas: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erro interno: {str(e)}")
+    
+@router.get(base_url + "/get-locais", response_model=list[Local])
+async def get_locais(request: Request, session: Session = Depends(get_session)):
+    """
+    Endpoint para obter todos os locais.
+    """
+    try:
+        locais = session.query(Local).all()
+        return locais
+    except Exception as e:
+        print(f"Erro ao obter locais: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erro interno: {str(e)}")
+    
+    
+@router.get(base_url + "/get-imagens", response_model=list[Imagem])
+async def get_imagens(request: Request, session: Session = Depends(get_session)):
+    """
+    Endpoint para obter todas as imagens.
+    """
+    try:
+        imagens = session.query(Imagem).all()
+        return imagens
+    except Exception as e:
+        print(f"Erro ao obter imagens: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erro interno: {str(e)}")

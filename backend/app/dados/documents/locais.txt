@@ -6,7 +6,7 @@ Ciclo Básico II
 Biblioteca de Obras Raras
 Faculdade de Educação
 Faculdade de Engenharia Agrícola
-Faculdade de Engenharia Civil, Arquitetura e Urbanismo
+Faculdade de Engenharia Civil Arquitetura e Urbanismo
 Faculdade de Educação Física
 Faculdade de Engenharia Mecânica
 Instituto de Artes
@@ -16,7 +16,7 @@ Instituto da Economia
 Instituto de Estudo Da Linguagem
 Instituto de Filosofia e Ciências Humanas
 Instituto de Geociências
-Instituto de Matemática, Estatística e Computação Científica
+Instituto de Matemática Estatística e Computação Científica
 Instituto de Quimica
 Plasma
 Restaurante Universitário

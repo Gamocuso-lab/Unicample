@@ -4,10 +4,10 @@ Praça Do Ciclo Básico,app/dados/documents/imagens/Praça_do_CB.jpg
 Biblioteca Cesar Lattes,app/dados/documents/imagens/BCCL.jpg
 Biblioteca de Obras Raras,app/dados/documents/imagens/BORA.jpg
 Ciclo Básico I,app/dados/documents/imagens/CB1.jpg
-Ciclo Básico II,app/dados/documents/imagens/CB2.jpg
+Ciclo Básico I,app/dados/documents/imagens/CB2.jpg
 Faculdade de Educação,app/dados/documents/imagens/FE.jpg
 Faculdade de Engenharia Agrícola,app/dados/documents/imagens/FEAGRI.jpg
-Faculdade de Engenharia Civil, Arquitetura e Urbanismo,app/dados/documents/imagens/FECAU.jpg
+Faculdade de Engenharia Civil Arquitetura e Urbanismo,app/dados/documents/imagens/FECAU.jpg
 Faculdade de Educação Física,app/dados/documents/imagens/FEF.jpg
 Faculdade de Engenharia Mecânica,app/dados/documents/imagens/FEM.jpg
 Instituto de Artes,app/dados/documents/imagens/IA1.jpg
@@ -31,3 +31,6 @@ Plasma,app/dados/documents/imagens/PLASMA1.jpg
 Plasma,app/dados/documents/imagens/PLASMA2.jpg
 Restaurante Universitário,app/dados/documents/imagens/RU1.jpg
 Restaurante Universitário,app/dados/documents/imagens/RU2.jpg
+Ciclo Básico II,app/dados/documents/imagens/PB1.jpg
+Ciclo Básico II,app/dados/documents/imagens/PB2.jpg
+Ciclo Básico II,app/dados/documents/imagens/PB3.jpg
