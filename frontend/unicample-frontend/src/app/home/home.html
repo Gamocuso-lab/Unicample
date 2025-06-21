@@ -1,0 +1,22 @@
+<div class="carousel-background">
+  <div class="carousel-images">
+    <img *ngFor="let image of images; let i = index"
+         [src]="image"
+         [ngClass]="{'active': i === currentIndex}"
+         alt="Background Image {{i + 1}}">
+  </div>
+  <div class="overlay"></div>
+  <div class="content">
+    <div class="center-box">
+
+      <img src="assets/imagens/logo_unicample.png" alt="Logo Unicample" class="unicample-logo">
+
+      <div class="button-container">
+        <button class="action-button" (click)="onPlayClick()">Jogar</button>
+        <button class="action-button" (click)="onRankingClick()">Ranking</button>
+        <button class="action-button" (click)="onAboutUsClick()">Sobre nós</button>
+      </div>
+    </div>
+
+  </div>
+</div>
