@@ -39,7 +39,7 @@ class RodadaService(metaclass=SingletonMeta):
         if not coordenada_correta:
             raise ValueError("Coordenada correta para a rodada não encontrada.")
             
-        local_correto = session.get(Local, coordenada_correta.local_id)
+        local_correto = session.get(Local, coordenada_correta.id_local)
         if not local_correto:
             raise ValueError("Local correto para a rodada não encontrado.")
 
@@ -90,20 +90,20 @@ class RodadaService(metaclass=SingletonMeta):
         """
         return self.dificuldade * 4
     
-    def get_dados_rodada_atual(self, session: Session, jogo_id: int) -> dict:
+    def get_dados_rodada_atual(self, session: Session, id_jogo: int) -> dict:
         """
         Busca a rodada atual de um jogo e retorna seus dados essenciais 
         para a visualização.
         """
         # 1. Obter a rodada atual do jogo
-        rodada_statement = select(Rodada).where(Rodada.jogo_id == jogo_id).order_by(Rodada.id.desc())
+        rodada_statement = select(Rodada).where(Rodada.id_jogo == id_jogo).order_by(Rodada.id.desc())
         rodada_atual = session.exec(rodada_statement).first()
 
         if not rodada_atual:
             raise ValueError("Nenhuma rodada encontrada para este jogo.")
 
         # 2. Obter a coordenada correta
-        coordenada = session.get(Coordenada, rodada_atual.coordenada_id)
+        coordenada = session.get(Coordenada, rodada_atual.id_coordenada)
         if not coordenada:
             raise ValueError("Coordenada não encontrada para a rodada.")
         

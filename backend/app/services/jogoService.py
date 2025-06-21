@@ -1,5 +1,5 @@
+from fastapi import HTTPException
 import os
-
 from fastapi import Request
 from fastapi.responses import HTMLResponse
 from app.services.rodadaService import RodadaService
@@ -22,26 +22,30 @@ class JogoService(metaclass=SingletonMeta):
     def __init__(self):
         pass
 
-    def create_jogo(self, session: Session):
+    async def create_jogo(self, session: Session):
         """
         Cria um novo jogo e uma rodada inicial.
         """
-        novo_jogo = Jogo(pontuacao=0, tempo=180)
+        try:
+            novo_jogo = Jogo(pontuacao=0, tempo=180)
 
-        # Adiciona o novo jogo à sessão
-        session.add(novo_jogo)
+            # Adiciona o novo jogo à sessão
+            session.add(novo_jogo)
 
-        # Confirma a transação
-        session.commit()
+            # Confirma a transação
+            session.commit()
 
-        # Atualiza o objeto com o ID gerado pelo banco
-        session.refresh(novo_jogo)
+            # Atualiza o objeto com o ID gerado pelo banco
+            session.refresh(novo_jogo)
 
-        self.cria_rodada(session, novo_jogo.id)
+            await self.cria_rodada(session, novo_jogo.id)
 
-        return novo_jogo
+            return novo_jogo
+        except Exception as e:
+            print(f"Erro ao criar jogo: {str(e)}")
+            raise HTTPException(status_code=500, detail=f"Erro interno: {str(e)}")
     
-    def seleciona_local(self, session: Session) -> Local:
+    async def seleciona_local(self, session: Session) -> Local:
         """
         Seleciona um registro aleatório da tabela Locais.
 
@@ -52,97 +56,112 @@ class JogoService(metaclass=SingletonMeta):
             Local: Um registro aleatório da tabela Locais.
         """
         # Consulta para selecionar todos os IDs da tabela Locais
-        statement = select(Local.id)
-        result = session.exec(statement).all()
+        try: 
+            statement = select(Local.id)
+            result = session.exec(statement).all()
 
-        if not result:
-            raise ValueError("Nenhum local encontrado no banco de dados.")
+            if not result:
+                raise ValueError("Nenhum local encontrado no banco de dados.")
 
-        # Seleciona um ID aleatório
-        random_id = random.choice(result)
+            # Seleciona um ID aleatório
+            random_id = random.choice(result)
 
-        # Busca o registro correspondente ao ID aleatório
-        local = session.get(Local, random_id)
+            # Busca o registro correspondente ao ID aleatório
+            local = session.get(Local, random_id)
 
-        return local
+            return local
+        except Exception as e:
+            print(f"Erro ao selecionar local: {str(e)}")
+            raise HTTPException(status_code=500, detail=f"Erro interno: {str(e)}")
 
-    def seleciona_coordenada(self, session: Session, local_id: int) -> Coordenada:
+    async def seleciona_coordenada(self, session: Session, id_local: int) -> Coordenada:
         """
         Seleciona uma coordenada associada a um local específico.
 
         Args:
             session (Session): Sessão do banco de dados.
-            local_id (int): ID do local para o qual a coordenada deve ser selecionada.
+            id_local (int): ID do local para o qual a coordenada deve ser selecionada.
 
         Returns:
             Coordenada: A coordenada associada ao local especificado.
         """
         # Consulta para selecionar uma coordenada associada ao local
-        statement = select(Coordenada).where(Coordenada.local_id == local_id)
-        coordenadas = session.exec(statement).all()
+        try:
+            statement = select(Coordenada).where(Coordenada.id_local == id_local)
+            coordenadas = session.exec(statement).all()
 
-        if not coordenadas:
-            raise ValueError("Nenhuma coordenada encontrada para o local especificado.")
+            if not coordenadas:
+                raise ValueError("Nenhuma coordenada encontrada para o local especificado.")
 
-        coordenada = random.choice(coordenadas) 
-        return coordenada
+            coordenada = random.choice(coordenadas) 
+            return coordenada
+        except Exception as e:
+            print(f"Erro ao selecionar coordenada: {str(e)}")
+            raise HTTPException(status_code=500, detail=f"Erro interno: {str(e)}")
 
-    def seleciona_imagem(self, session: Session, local_id: int) -> Imagem:
+    async def seleciona_imagem(self, session: Session, id_local: int) -> Imagem:
         """
         Seleciona uma imagem associada a um local específico.
 
         Args:
             session (Session): Sessão do banco de dados.
-            local_id (int): ID do local para o qual a imagem deve ser selecionada.
+            id_local (int): ID do local para o qual a imagem deve ser selecionada.
 
         Returns:
             Imagem: A imagem associada ao local especificado.
         """
         # Consulta para selecionar uma imagem associada ao local
-        statement = select(Imagem).where(Imagem.local_id == local_id)
-        imagens = session.exec(statement).all()
+        try:
+            statement = select(Imagem).where(Imagem.id_local == id_local)
+            imagens = session.exec(statement).all()
 
-        if not imagens:
-            raise ValueError("Nenhuma imagem encontrada para o local especificado.")
+            if not imagens:
+                raise ValueError("Nenhuma imagem encontrada para o local especificado.")
 
-        imagem = random.choice(imagens) 
-        return imagem
+            imagem = random.choice(imagens) 
+            return imagem
+        except Exception as e:
+            print(f"Erro ao selecionar imagem: {str(e)}")
+            raise HTTPException(status_code=500, detail=f"Erro interno: {str(e)}")
 
-    def cria_rodada(self, session: Session, jogo_id: int) -> Rodada:
+    async def cria_rodada(self, session: Session, id_jogo: int) -> Rodada:
         """
         Cria uma nova rodada associada a um jogo existente.
 
         Args:
             session (Session): Sessão do banco de dados.
-            jogo_id (int): ID do jogo ao qual a rodada será associada.
+            id_jogo (int): ID do jogo ao qual a rodada será associada.
         Returns:
             Rodada: A nova rodada criada.
         """
+        try:
+            local = await self.seleciona_local(session)
 
-        local = self.seleciona_local(session)
+            imagem = await self.seleciona_imagem(session, local.id)
+            coordenada = await self.seleciona_coordenada(session, local.id)
 
-        imagem = self.seleciona_imagem(session, local.id)
-        coordenada = self.seleciona_coordenada(session, local.id)
+            nova_rodada = Rodada(id_jogo=id_jogo, pontuacao=0, tentativas=4, dificuldade=4, id_imagem=imagem.id, id_coordenada=coordenada.id)
 
-        nova_rodada = Rodada(jogo_id=jogo_id, pontuacao=0, tentativas=4, dificuldade=4, imagem_id=imagem.id, coordenada_id=coordenada.id)
+            # Adiciona a nova rodada à sessão
+            session.add(nova_rodada)
 
-        # Adiciona a nova rodada à sessão
-        session.add(nova_rodada)
+            # Confirma a transação
+            session.commit()
 
-        # Confirma a transação
-        session.commit()
+            # Atualiza o objeto com o ID gerado pelo banco
+            session.refresh(nova_rodada)
 
-        # Atualiza o objeto com o ID gerado pelo banco
-        session.refresh(nova_rodada)
-
-        return nova_rodada
+            return nova_rodada
+        except Exception as e:
+            print(f"Erro ao criar rodada: {str(e)}")
+            raise HTTPException(status_code=500, detail=f"Erro interno: {str(e)}")
     
-    def get_jogo_info(self, session: Session, jogo_id: int) -> JogoResponse:
+    async def get_jogo_info(self, session: Session, id_jogo: int) -> JogoResponse:
         """
         Obtém as informações de um jogo específico.
         Args:
             session (Session): Sessão do banco de dados.
-            jogo_id (int): ID do jogo a ser buscado.
+            id_jogo (int): ID do jogo a ser buscado.
         Returns:
             JogoResponse: Informações do jogo, incluindo pontuação, tempo e rodadas.
         Raises:
@@ -151,13 +170,14 @@ class JogoService(metaclass=SingletonMeta):
         # Busca o jogo pelo ID
 
         jogo_info = JogoResponse(
-            id=jogo_id,
+            id=id_jogo,
             pontuacao=0,
             tempo=180,
-            rodada_atual=None
+            id_rodada_atual=0,
+            rodadas=[]
         )
 
-        jogo = session.get(Jogo, jogo_id)
+        jogo = session.get(Jogo, id_jogo)
 
         if not jogo:
             raise ValueError("Jogo não encontrado.")
@@ -165,7 +185,7 @@ class JogoService(metaclass=SingletonMeta):
         jogo_info.pontuacao = jogo.pontuacao
         jogo_info.tempo = jogo.tempo
 
-        rodada_statement = select(Rodada).where(Rodada.jogo_id == jogo_id).order_by(Rodada.id.desc())
+        rodada_statement = select(Rodada).where(Rodada.id_jogo == id_jogo).order_by(Rodada.id.desc())
 
         rodadas = session.exec(rodada_statement).all()
 
@@ -176,13 +196,13 @@ class JogoService(metaclass=SingletonMeta):
         jogo_info.rodadas = []
 
         for rodada in rodadas:
-            coordenada = session.get(Coordenada, rodada.coordenada_id)
-            imagem = session.get(Imagem, rodada.imagem_id)
+            coordenada = session.get(Coordenada, rodada.id_coordenada)
+            imagem = session.get(Imagem, rodada.id_imagem)
 
             jogo_info.rodadas.append({
                 "tentativas": rodada.tentativas,
                 "dificuldade": rodada.dificuldade,
-                "imagem": imagem.url if imagem else None,
+                "imagem": imagem.path if imagem else None,
                 "coordenada": {
                     "lat": coordenada.lat if coordenada else None,
                     "lng": coordenada.lng if coordenada else None
@@ -191,11 +211,11 @@ class JogoService(metaclass=SingletonMeta):
 
         return jogo_info
 
-    def adiciona_pontuacao(self, session: Session, jogo_id: int, rodada_id: int):
+    async def adiciona_pontuacao(self, session: Session, id_jogo: int, rodada_id: int):
         """
         Adiciona pontuação a um jogo existente.
         """
-        jogo = session.get(Jogo, jogo_id)
+        jogo = session.get(Jogo, id_jogo)
 
         rodada = session.get(Rodada, rodada_id)
 
@@ -215,11 +235,11 @@ class JogoService(metaclass=SingletonMeta):
 
         return jogo
     
-    def chute(self, session: Session, jogo_id: int, rodada_id: int, local: str):
+    async def chute(self, session: Session, id_jogo: int, rodada_id: int, local: str):
         """
         Processa o chute do jogador e atualiza a pontuação.
         """
-        jogo = session.get(Jogo, jogo_id)
+        jogo = session.get(Jogo, id_jogo)
 
         if not jogo:
             raise ValueError("Jogo não encontrado.")
@@ -231,14 +251,14 @@ class JogoService(metaclass=SingletonMeta):
         acerto = rodadaService.verifica_acerto(session, rodada_id, local)
 
         if acerto:
-            self.adiciona_pontuacao(session, jogo_id, rodada_id)
+            self.adiciona_pontuacao(session, id_jogo, rodada_id)
             return True
         else:
             rodadaService.diminui_dificuldade(session, rodada_id)
         
         return False
     
-    def get_rodada_streetview(self, session: Session, jogo_id: int, request: Request) -> HTMLResponse:
+    async def get_rodada_streetview(self, session: Session, id_jogo: int, request: Request) -> HTMLResponse:
         """
         Orquestra a criação da visualização do Street View para a rodada atual.
         """
@@ -247,7 +267,7 @@ class JogoService(metaclass=SingletonMeta):
         streetview_service = StreetviewService()
 
         # 2. Obter os dados da rodada atual usando o RodadaService
-        dados_rodada = rodada_service.get_dados_rodada_atual(session, jogo_id)
+        dados_rodada = rodada_service.get_dados_rodada_atual(session, id_jogo)
 
         # 3. Lógica do blur (agora reside aqui, no JogoService)
         blur_level = dados_rodada.get("blur_level", 1)
