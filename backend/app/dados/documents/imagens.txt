@@ -1,0 +1,33 @@
+Instituto de Física Gleb Wataghin,app/dados/documents/imagens/IFGW1.jpg
+Instituto de Física Gleb Wataghin,app/dados/documents/imagens/IFGW3.jpg
+Praça Do Ciclo Básico,app/dados/documents/imagens/Praça_do_CB.jpg
+Biblioteca Cesar Lattes,app/dados/documents/imagens/BCCL.jpg
+Biblioteca de Obras Raras,app/dados/documents/imagens/BORA.jpg
+Ciclo Básico I,app/dados/documents/imagens/CB1.jpg
+Ciclo Básico II,app/dados/documents/imagens/CB2.jpg
+Faculdade de Educação,app/dados/documents/imagens/FE.jpg
+Faculdade de Engenharia Agrícola,app/dados/documents/imagens/FEAGRI.jpg
+Faculdade de Engenharia Civil, Arquitetura e Urbanismo,app/dados/documents/imagens/FECAU.jpg
+Faculdade de Educação Física,app/dados/documents/imagens/FEF.jpg
+Faculdade de Engenharia Mecânica,app/dados/documents/imagens/FEM.jpg
+Instituto de Artes,app/dados/documents/imagens/IA1.jpg
+Instituto da Biologia,app/dados/documents/imagens/IB.jpg
+Instituto da Computação,app/dados/documents/imagens/IC1.jpg
+Instituto da Computação,app/dados/documents/imagens/IC2.jpg
+Instituto da Computação,app/dados/documents/imagens/IC3.jpg
+Instituto da Computação,app/dados/documents/imagens/IC4.jpg
+Instituto da Computação,app/dados/documents/imagens/IC5.jpg
+Instituto da Economia,app/dados/documents/imagens/IE1.jpg
+Instituto da Economia,app/dados/documents/imagens/IE2.jpg
+Instituto de Estudo Da Linguagem,app/dados/documents/imagens/IEL.jpg
+Instituto de Filosofia e Ciências Humanas,app/dados/documents/imagens/IFCH1.jpg
+Instituto de Filosofia e Ciências Humanas,app/dados/documents/imagens/IFCH2.jpg
+Instituto de Geociências,app/dados/documents/imagens/IG.jpg
+Instituto de Matemática Estatística e Computação Científica,app/dados/documents/imagens/IMECC1.jpg
+Instituto de Matemática Estatística e Computação Científica,app/dados/documents/imagens/IMECC2.jpg
+Instituto de Quimica,app/dados/documents/imagens/IQ.jpg
+Instituto de Quimica,app/dados/documents/imagens/IQ2.jpg
+Plasma,app/dados/documents/imagens/PLASMA1.jpg
+Plasma,app/dados/documents/imagens/PLASMA2.jpg
+Restaurante Universitário,app/dados/documents/imagens/RU1.jpg
+Restaurante Universitário,app/dados/documents/imagens/RU2.jpg
