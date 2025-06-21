@@ -1,6 +1,6 @@
 import time
 import os
-from create_functions import *
+from app.dados.create_functions import *
 
 def process_data_from_unified_files(data_directory):
     """
