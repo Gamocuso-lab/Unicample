@@ -63,6 +63,7 @@ export class GuessInputComponent implements OnInit {
 
   openPanel(): void {
     this.isPanelOpen = true;
+    document.getElementById('filterInput')?.focus(); 
   }
 
   closePanel(): void {
@@ -77,6 +78,9 @@ export class GuessInputComponent implements OnInit {
   submitGuess(): void {
     if (this.selectedValue) {
       this.guessSubmitted.emit(this.selectedValue);
+      this.selectedValue = null; // Limpa a seleção após o envio
+      this.filterText = ''; // Limpa o filtro de texto
+      this.filterLocations();
       this.closePanel();
     } else {
       alert("Por favor, selecione um local da lista.");
