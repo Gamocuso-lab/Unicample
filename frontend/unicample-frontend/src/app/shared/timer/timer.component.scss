@@ -1,0 +1,15 @@
+.timer {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  background-color: #f0f0f0;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+// Para destacar quando o tempo estiver acabando
+.timer.warning {
+  color: #fff;
+  background-color: #f44336;
+}

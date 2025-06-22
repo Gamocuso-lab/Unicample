@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RankingService } from '../../core/services/rankingService';
 
 @Component({
   selector: 'app-ranking',
@@ -11,15 +12,24 @@ import { CommonModule } from '@angular/common';
 export class RankingComponent {
   @Output() closeModal = new EventEmitter<void>();
 
-  // Puxar do banco de dados isso aqui
-  players: string[] = [
-    'Player 1: 1000 pts',
-    'Player 2: 950 pts',
-    'Player 3: 900 pts',
-    'Player 4: 850 pts',
-    'Player 5: 800 pts',
-    'Player 6: 750 pts'
-  ];
+  players: any[] = [];
+
+  constructor(private rankingService: RankingService) {}
+
+  ngOnInit() {
+    this.carregarRanking();
+  }
+
+  carregarRanking() {
+    this.rankingService.getRanking().subscribe({
+      next: (response: any) => {
+        this.players = response || [];
+      },
+      error: (error) => {
+        console.error('Erro ao obter ranking:', error);
+      }
+    });
+  }
 
   onCloseButtonClick(): void {
     this.closeModal.emit();

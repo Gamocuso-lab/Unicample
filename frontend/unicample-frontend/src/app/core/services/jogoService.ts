@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../enviroment';
 
 @Injectable({
@@ -23,7 +23,7 @@ public criarJogo() {
 
   public getJogoInfo(id_jogo: number) {
     try {
-        return this.http.get(`${this.apiUrl}/infos?jogo_id=${id_jogo}`);
+        return this.http.get(`${this.apiUrl}/infos?id_jogo=${id_jogo}`);
     } catch (error) {
         console.error('Erro ao obter informações do jogo:', error);
         throw error;
@@ -45,6 +45,18 @@ public criarJogo() {
         return this.http.get(`${this.apiUrl}/chute?id_jogo=${id_jogo}&local=${chute}`);
     } catch (error) {
         console.error('Erro ao enviar chute:', error);
+        throw error;
+    }
+  }
+
+  public finalizaJogo(id_jogo: number) {
+
+    const params = new HttpParams().set('id_jogo', id_jogo.toString());
+
+    try {
+        return this.http.put(`${this.apiUrl}/finalizar`, {}, { params });
+    } catch (error) {
+        console.error('Erro ao finalizar jogo:', error);
         throw error;
     }
   }

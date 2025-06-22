@@ -1,8 +1,11 @@
 import { Component, Input, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-notification',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './notification.component.html',
   styleUrls: ['./notification.component.css'],
   animations: [
@@ -26,7 +29,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
 })
 export class NotificationComponent implements OnInit, OnDestroy {
   @Input() message: string = '';
-  @Input() type: 'success' | 'error' | 'warning' | 'info' = 'info';
+  @Input() type: 'success' | 'error'  = 'success';
   @Input() duration: number = 5000; // Duração em ms
 
   animationState: 'visible' | 'hidden' = 'hidden';

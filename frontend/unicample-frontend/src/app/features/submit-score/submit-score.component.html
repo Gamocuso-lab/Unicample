@@ -5,7 +5,11 @@
       <p>Insira seu nome para salvar a pontuação no ranking ou volte para o Menu.</p>
       
       <div class="form-group">
-        <input type="text" class="name-input" placeholder="Digite seu nome aqui">
+        <div class="score">
+            <p style="font-weight: bold;">Pontuação: {{ pontuacao }}</p>
+        </div>
+        <label for="name">Nome:</label>
+        <input name="name" type="text" [(ngModel)]="nomeJogador" class="name-input" placeholder="Digite seu nome aqui">
       </div>
 
     </div>

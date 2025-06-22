@@ -1,20 +1,44 @@
 <div class="game-container">
-<div class="game-header">
-    <img
+    <div class="game-header">
+        <img
             src="assets/imagens/logo_unicample.png"
             alt="Logo Unicample"
             class="unicample-logo"
-            height="50"
-        />
-</div>
+            height="50"/>
+    </div>
 
-  <app-image-viewer [path_imagem]="imageViewerPath"></app-image-viewer>
+    <app-image-viewer [path_imagem]="imageViewerPath"></app-image-viewer>
 
-  <app-street-view 
-    [id_jogo]="id_jogo ? id_jogo.toString() : ''" 
-    [refreshTrigger]="refreshCounter">
-  </app-street-view>
+    <app-notification 
+        *ngIf="showNotification" 
+        [message]="messageNotification" 
+        [type]="typeNotification" 
+        [duration]="5000">
+    </app-notification>
 
-<app-guess-input (guessSubmitted)="onGuessSubmitted($event)"></app-guess-input>
+    <app-street-view 
+        [id_jogo]="id_jogo ? id_jogo.toString() : ''" 
+        [refreshTrigger]="refreshCounter">
+    </app-street-view>
+
+    <app-guess-input (guessSubmitted)="onGuessSubmitted($event)"></app-guess-input>
+
+    <div class="game-informations">
+        <app-timer 
+            *ngIf="tempoJogo !== 0"
+            [id_jogo]="id_jogo.toString()" 
+            [tempoInicial]="tempoJogo"
+            (tempoAcabou)="finalizarJogoPorTempo()">
+        </app-timer>
+        <div class="score">
+            <p style="font-weight: bold;">Pontuação: {{ score }}</p>
+        </div>
+    </div>
+
+    <app-submit-score 
+        *ngIf="showSubmitScore" 
+        [pontuacao]="score" 
+        [id_jogo]="id_jogo.toString()" >
+    </app-submit-score>
 
 </div>
