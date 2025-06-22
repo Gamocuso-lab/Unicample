@@ -1,0 +1,128 @@
+:host {
+  font-family: "Michroma", sans-serif;
+}
+
+.open-panel-button {
+  font-weight: 700;
+  background-color: rgba(221, 66, 45, 0.95);
+  color: White;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  padding: 30px 45px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+}
+
+.open-panel-button.fade-out {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.right-panel {
+  position: fixed;
+  top: 0;
+  right: -450px;
+  width: 400px;
+  height: 100%;
+  background-color: rgba(221, 66, 45, 0.95);
+  transition: right 0.3s ease-out;
+  z-index: 999;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.right-panel.open {
+  right: 0;
+}
+
+.close-panel-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.close-panel-button:hover {
+  color: #000;
+}
+
+.custom-dropdown-list-container {
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  max-height: 340px;
+  overflow-y: auto;
+  background-color: #fff;
+  margin-top: 0px;
+  color: #333;
+}
+
+.custom-dropdown-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.custom-dropdown-list li {
+  padding: 8px 10px;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+}
+
+.custom-dropdown-list li:hover {
+  background-color: #e9e9e9;
+}
+
+.custom-dropdown-list li.selected {
+  background-color: #fb7a56;
+  color: white;
+}
+
+.chute-value {
+  border-radius: 8px;
+  height: 40px;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 0.9em;
+  padding: 5px;
+}
+
+.label-chute {
+  font-size: 2em;
+  color: white;
+  display: block;
+  text-align: center;
+  font-weight: 700;
+  text-shadow: -1.2px -1.2px 0 #000, 1.2px -1.2px 0 #000, -1.2px 1.2px 0 #000, 1px 1px 0 #000;
+}
+
+button[type="submit"] {
+  padding: 10px 15px;
+  font-size: 1.2em;
+  width: 60%;
+  display: block;
+  margin: 20px auto 0 auto;
+  border: none;
+  font-weight: 700;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background-color: #fff;
+  color: #333;
+}
+
+button[type="submit"]:hover {
+  font-weight: 700;
+  background-color: #f0f0f0;
+}

@@ -1,1 +1,39 @@
-<p>guess-input works!</p>
+<button 
+  class="open-panel-button" 
+  (click)="openPanel()" 
+  [class.fade-out]="isPanelOpen"
+  style="font-size: 1.4em">
+  Fazer chute!
+</button>
+
+<div class="right-panel" [class.open]="isPanelOpen">
+  <button class="close-panel-button" (click)="closePanel()">&times;</button>
+  
+  <form (ngSubmit)="submitGuess()">
+    <label class="label-chute">Onde Estamos?</label><br>
+
+    <input
+      type="text"
+      class="chute-value"
+      placeholder="Digite para filtrar..."
+      autocomplete="off"
+      [(ngModel)]="filterText"
+      (input)="filterLocations()"
+      name="filterInput" 
+    /><br><br>
+
+    <div class="custom-dropdown-list-container">
+      <ul class="custom-dropdown-list">
+        <li *ngFor="let location of filteredLocations"
+            (click)="selectLocation(location)"
+            [class.selected]="location === selectedValue">
+            {{ location }}
+        </li>
+      </ul>
+    </div>
+    
+    <br><br>
+    
+    <button type="submit">Enviar Chute</button>
+  </form>
+</div>
