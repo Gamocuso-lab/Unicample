@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { MainMenuComponent } from './main-menu/main-menu.component';
+import { Home } from './features/home/home';
 
 export const routes: Routes = [
-  { path: '', component: MainMenuComponent }
+  { path: '', component:  Home}
 ];
