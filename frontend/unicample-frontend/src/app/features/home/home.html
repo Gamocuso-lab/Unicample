@@ -11,8 +11,6 @@
         class="unicample-logo"
       />
 
-      <app-image-viewer [path_imagem]="images[0]"></app-image-viewer>
-
       <div class="button-container">
         <button class="action-button" (click)="onPlayClick()">Jogar</button>
         <button class="action-button" (click)="onRankingClick()">
@@ -24,10 +22,38 @@
       </div>
     </div>
   </div>
+
   <div class="modal-backdrop" [ngClass]="{ 'is-active': showRankingModal }">
     <app-ranking (closeModal)="onCloseRankingModal()"></app-ranking>
   </div>
+
   <div class="modal-backdrop" [ngClass]="{ 'is-active': showAboutUsModal }">
     <app-about-us (closeModal)="onCloseAboutUsModal()"></app-about-us>
+  </div>
+
+  <div class="modal-backdrop" [ngClass]="{ 'is-active': showPlayModal }">
+    <div class="modal-content">
+      <h2 class="modal-title">Como Jogar?</h2>
+      <div class="modal-body">
+        <p>
+          O objetivo do jogo é tentar acertar o maior número de locais possíveis
+          no tempo. Você pode olhar para todas as direções usando o mouse e,
+          quando você estiver preparado para responder, bastar clicar no botão
+          "Fazer chute!".
+        </p>
+        <p>
+          Você tem 4 chances e, caso você erre, a imagem ficará menos distorcida
+          e você perderá uma chance. Se julgar necessário, clique na seta
+          lateral para uma dica extra.
+        </p>
+        <p>
+          Quando terminar, você também poderá adicionar sua pontuação ao
+          ranking. Boa sorte!
+        </p>
+      </div>
+      <div class="button-container">
+        <button class="action-button" (click)="startGame()">Começar!</button>
+      </div>
+    </div>
   </div>
 </div>

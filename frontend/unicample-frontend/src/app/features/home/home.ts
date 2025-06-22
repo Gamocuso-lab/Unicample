@@ -2,14 +2,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RankingComponent } from '../ranking/ranking.component';
 import { AboutUsComponent } from '../about-us/about-us.component';
-import { ImageViewerComponent } from '../../shared/image-viewer/image-viewer.component';
 import { JogoService } from '../../core/services/jogoService';
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RankingComponent, AboutUsComponent, ImageViewerComponent],
+  imports: [CommonModule, RankingComponent, AboutUsComponent],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
@@ -60,6 +59,7 @@ export class Home implements OnInit, OnDestroy {
 
   showRankingModal: boolean = false;
   showAboutUsModal: boolean = false;
+  showPlayModal: boolean = false; // Variável para controlar o novo modal
 
   constructor(private jogoService: JogoService) {}
 
@@ -88,6 +88,10 @@ export class Home implements OnInit, OnDestroy {
   }
 
   onPlayClick(): void {
+    this.showPlayModal = true;
+  }
+
+  startGame(): void {
     window.location.href = '/game';
   }
 
