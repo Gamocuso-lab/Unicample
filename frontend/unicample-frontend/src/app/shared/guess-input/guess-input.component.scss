@@ -1,10 +1,14 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+
 :host {
-  font-family: "Michroma", sans-serif;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-style: normal;
 }
 
 .open-panel-button {
   font-weight: 700;
-  background-color: rgba(221, 66, 45, 0.95);
+  background-color: rgba(66, 182, 91, 0.95);
   color: White;
   position: fixed;
   bottom: 20px;
@@ -29,7 +33,7 @@
   right: -450px;
   width: 400px;
   height: 100%;
-  background-color: rgba(221, 66, 45, 0.95);
+  background-color: rgba(66, 182, 91, 0.95);
   transition: right 0.3s ease-out;
   z-index: 999;
   padding: 20px;
@@ -67,6 +71,9 @@
 }
 
 .custom-dropdown-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -84,7 +91,7 @@
 }
 
 .custom-dropdown-list li.selected {
-  background-color: #fb7a56;
+  background-color: #48974e;
   color: white;
 }
 
@@ -104,7 +111,8 @@
   display: block;
   text-align: center;
   font-weight: 700;
-  text-shadow: -1.2px -1.2px 0 #000, 1.2px -1.2px 0 #000, -1.2px 1.2px 0 #000, 1px 1px 0 #000;
+  text-shadow: -1.2px -1.2px 0 #000, 1.2px -1.2px 0 #000, -1.2px 1.2px 0 #000,
+    1px 1px 0 #000;
 }
 
 button[type="submit"] {

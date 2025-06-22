@@ -60,7 +60,6 @@ export class GuessInputComponent implements OnInit {
 
   selectLocation(location: string): void {
     this.selectedValue = location;
-    this.filterText = location; 
     this.filterLocations();
   }
 
