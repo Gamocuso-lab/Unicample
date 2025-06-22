@@ -92,25 +92,23 @@
 .center-box {
   background-color: rgba(255, 255, 255, 0.6);
   border-radius: 15px;
-  padding: 30px;
+  padding: 20px;
   margin-top: 40px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   text-align: center;
   max-width: 500px;
   width: 90%;
   color: #333;
-  display: flex; /* Adicionado para organizar os itens internos */
-  flex-direction: column; /* Adicionado para empilhar logo, título e botões */
-  align-items: center; /* Adicionado para centralizar horizontalmente os itens */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Novo estilo para a logo */
 .unicample-logo {
-  max-width: 450px; /* Ajuste o tamanho máximo conforme necessário */
-  height: auto; /* Mantém a proporção da imagem */
-  margin-bottom: 25px; /* Espaçamento abaixo da logo e antes do h2 */
+  max-width: 450px;
+  height: auto;
+  margin-bottom: 15px;
 }
-
 
 .center-box h2 {
   margin-top: 0;
@@ -151,4 +149,26 @@
 .action-button:active {
   background-color: #48974e;
   transform: translateY(0);
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+
+  transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+
+  opacity: 0;
+  transform: translateY(-100vh);
+}
+
+.modal-backdrop.is-active {
+  opacity: 1;
+  transform: translateY(0); 
 }

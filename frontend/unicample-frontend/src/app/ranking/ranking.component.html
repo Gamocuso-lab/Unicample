@@ -1,0 +1,18 @@
+<div class="ranking-modal-content">
+  <button class="close-button" (click)="onCloseButtonClick()">X</button>
+  <h2 class="ranking-title">
+    <img src="assets/imagens/trofeu.png" alt="Trophy" class="trophy-image">
+    Ranking
+    <img src="assets/imagens/trofeu.png" alt="Trophy" class="trophy-image">
+  </h2>
+  <ul>
+    <li *ngFor="let player of players; let i = index" 
+        [ngClass]="{
+          'gold': i === 0, 
+          'silver': i === 1, 
+          'bronze': i === 2
+        }">
+      {{ player }}
+    </li>
+  </ul>
+</div>

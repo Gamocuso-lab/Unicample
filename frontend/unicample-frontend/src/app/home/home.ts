@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule, NgClass } from '@angular/common';
+import { CommonModule } from '@angular/common';
+import { RankingComponent } from '../ranking/ranking.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, NgClass],
+  imports: [CommonModule, RankingComponent],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
@@ -53,6 +54,8 @@ export class Home implements OnInit, OnDestroy {
   private intervalId: any;
   private readonly INTERVAL_TIME_MS = 5000;
 
+  showRankingModal: boolean = false;
+
   ngOnInit(): void {
     this.startCarousel();
   }
@@ -79,16 +82,17 @@ export class Home implements OnInit, OnDestroy {
 
   onPlayClick(): void {
     console.log('Botão "Jogar" clicado!');
-    // futura implementação: navegar para a página do jogo, ou iniciar o jogo
   }
 
   onRankingClick(): void {
-    console.log('Botão "Ranking" clicado!');
-    // futura implementação: navegar para a página de ranking
+    this.showRankingModal = true;
   }
 
   onAboutUsClick(): void {
     console.log('Botão "Sobre nós" clicado!');
-    // futura implementação: navegar para a página "Sobre nós"
+  }
+
+  onCloseRankingModal(): void {
+    this.showRankingModal = false;
   }
 }

@@ -1,0 +1,119 @@
+.ranking-modal-content {
+  background-color: white;
+  border-radius: 15px;
+  padding: 40px;
+  width: 90%;
+  height: 70%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  position: relative;
+  color: #333;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+
+.ranking-modal-content h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 2.2em;
+  color: #333;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+}
+
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.8em;
+  font-weight: bold;
+  cursor: pointer;
+  color: #666;
+  padding: 5px;
+  line-height: 1;
+  transition: color 0.2s ease;
+}
+
+.close-button:hover {
+  color: #000;
+}
+
+.ranking-modal-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.ranking-modal-content li {
+  font-family: "Poppins", sans-serif;
+  border-bottom: 1px solid #eee;
+  font-size: 1.1em;
+}
+
+.ranking-modal-content li:last-child {
+  border-bottom: none;
+}
+
+.ranking-title {
+  font-family: "Poppins", sans-serif;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ranking-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.trophy-image {
+  width: 32px;
+  height: 32px;
+}
+
+.ranking-modal-content .ranking-title {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 2.2em; 
+  color: #333;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+}
+.ranking-modal-content li {
+  padding: 12px 0;
+  font-family: "Poppins", sans-serif;
+  border-bottom: 1px solid #cac8c8;
+  font-size: 1.1em;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+
+  &:hover {
+    transform: scale(1.02);
+    background-color: #f9f9f9;
+  }
+}
+
+.ranking-modal-content li.gold {
+  color: #D4AF37;
+  font-weight: 700;
+  font-size: 1.2em;
+}
+
+.ranking-modal-content li.silver {
+  color: #A8A9AD;
+  font-weight: 700;
+}
+
+.ranking-modal-content li.bronze {
+  color: #A97142;
+  font-weight: 700;
+}
