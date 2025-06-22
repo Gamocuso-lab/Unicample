@@ -1,40 +1,33 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Street View - Visualização Fixa</title>
-    <meta charset="utf-8" />
-    <style>
-      #street-view {
-        height: 100vh;
-        width: 100%;  
-      }
-      canvas.mapsConsumerUiSceneCoreScene__canvas.widget-scene-canvas {
-      filter: blur({{blur}}px);
-      }
-    </style>
-  </head>
-  <body>
-    <div id="street-view"></div>
+<div style="overflow: hidden;">
+  <style>
+    #street-view {
+      height: 90vh;
+      width: 100%;  
+    }
+    canvas.mapsConsumerUiSceneCoreScene__canvas.widget-scene-canvas {
+    filter: blur({{blur}}px);
+    }
+  </style>
+  <div id="street-view"></div>
 
-    <script>
-      function initialize() {
-        const sv = new google.maps.StreetViewPanorama(document.getElementById("street-view"), {
-          position: { lat: {{ lat }}, lng: {{ lng }} },
-          pov: { heading: 0, pitch: 0 },
-          zoom: 1,
-          clickToGo: false,
-          disableDefaultUI: true,
-          scrollwheel: false,
-          linksControl: false,
-          panControl: false,
-          motionTracking: false
-        });
-      }
-    </script>
+  <script>
+    function initialize() {
+      const sv = new google.maps.StreetViewPanorama(document.getElementById("street-view"), {
+        position: { lat: {{ lat }}, lng: {{ lng }} },
+        pov: { heading: 0, pitch: 0 },
+        zoom: 1,
+        clickToGo: false,
+        disableDefaultUI: true,
+        scrollwheel: false,
+        linksControl: false,
+        panControl: false,
+        motionTracking: false
+      });
+    }
+  </script>
 
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initialize"
-      async defer
-    ></script>
-  </body>
-</html>
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key={{ google_maps_api_key }}&callback=initialize"
+    async defer
+  ></script>
+</div>

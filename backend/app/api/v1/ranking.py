@@ -9,7 +9,9 @@ from app.schemas.rankingSchema import RankingCreate
 
 router = APIRouter()
 
-@router.get("/", response_model=List[Ranking])
+base_url = "/ranking"
+
+@router.get(base_url, response_model=List[Ranking])
 async def get_ranking(
     nome: Optional[str] = None, 
     session: Session = Depends(get_session)
@@ -29,8 +31,8 @@ async def get_ranking(
         raise HTTPException(status_code=500, detail="Erro interno ao buscar o ranking.")
 
 
-@router.post("/", response_model=Ranking, status_code=201)
-async def add_ranking_entry(
+@router.post(base_url + "/adicionar", response_model=Ranking, status_code=201)
+async def adicionar_pontuacao(
     ranking_data: RankingCreate, 
     session: Session = Depends(get_session)
 ):

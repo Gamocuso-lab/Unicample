@@ -14,5 +14,6 @@ class JogoResponse(BaseModel):
     id: int
     pontuacao: int
     tempo: int
+    finalizado: bool
     id_rodada_atual: int | None = None
     rodadas: list[RodadaResponse]

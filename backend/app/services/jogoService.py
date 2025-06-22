@@ -173,6 +173,7 @@ class JogoService(metaclass=SingletonMeta):
             id=id_jogo,
             pontuacao=0,
             tempo=180,
+            finalizado=False,
             id_rodada_atual=0,
             rodadas=[]
         )
@@ -184,6 +185,7 @@ class JogoService(metaclass=SingletonMeta):
 
         jogo_info.pontuacao = jogo.pontuacao
         jogo_info.tempo = jogo.tempo
+        jogo_info.finalizado = jogo.finalizado
 
         rodada_statement = select(Rodada).where(Rodada.id_jogo == id_jogo).order_by(Rodada.id.desc())
 
@@ -227,15 +229,13 @@ class JogoService(metaclass=SingletonMeta):
 
         jogo.pontuacao += rodada.dificuldade*30
 
-        # Atualiza o jogo na sessão
         session.add(jogo)
 
-        # Confirma a transação
         session.commit()
 
         return jogo
     
-    async def chute(self, session: Session, id_jogo: int, rodada_id: int, local: str):
+    async def chute(self, session: Session, id_jogo: int, local: str):
         """
         Processa o chute do jogador e atualiza a pontuação.
         """
@@ -247,14 +247,20 @@ class JogoService(metaclass=SingletonMeta):
         # Rodada Service para utilizar métodos relacionados à rodada
         rodadaService = RodadaService()
 
+        rodada_id = rodadaService.get_dados_rodada_atual(session, id_jogo).get("id_rodada")
+
         # Verifica se o chute está correto
         acerto = rodadaService.verifica_acerto(session, rodada_id, local)
 
         if acerto:
-            self.adiciona_pontuacao(session, id_jogo, rodada_id)
+            await self.adiciona_pontuacao(session, id_jogo, rodada_id)
+            await self.cria_rodada(session, id_jogo)
             return True
         else:
-            rodadaService.diminui_dificuldade(session, rodada_id)
+            rodada = rodadaService.diminui_dificuldade(session, rodada_id)
+            if rodada.tentativas <= 0:
+                # Se não houver mais tentativas, cria uma nova rodada
+                await self.cria_rodada(session, id_jogo)
         
         return False
     
@@ -287,3 +293,31 @@ class JogoService(metaclass=SingletonMeta):
             request=request,
             blur_level=blur_level
         )
+    
+    async def get_rodada_imagem(self, session: Session, id_jogo: int) -> str:
+        """
+        Obtém a imagem da rodada atual de um jogo.
+        """
+        rodada_service = RodadaService()
+
+        # 2. Obter os dados da rodada atual usando o RodadaService
+        dados_rodada = rodada_service.get_dados_rodada_atual(session, id_jogo)
+
+        return dados_rodada.get("imagem")
+    
+    async def finalizar_jogo(self, session: Session, id_jogo: int) -> JogoResponse:
+        """
+        Finaliza um jogo, retornando as informações do jogo finalizado.
+        """
+        jogo = session.get(Jogo, id_jogo)
+
+        if not jogo:
+            raise ValueError("Jogo não encontrado.")
+
+        jogo.finalizado = True
+
+        session.add(jogo)
+
+        session.commit()
+        
+        return await self.get_jogo_info(session, id_jogo)

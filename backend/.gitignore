@@ -1,2 +1,4 @@
 pycache/
 *.py[cod]
+
+venv/

@@ -1,6 +1,7 @@
 import os
 from fastapi import Request
 from fastapi.responses import HTMLResponse
+from app.models.imagem import Imagem
 from app.services.streetviewService import StreetviewService
 from sqlmodel import Session, select
 from app.models.rodada import Rodada
@@ -69,7 +70,6 @@ class RodadaService(metaclass=SingletonMeta):
         if rodada.tentativas > 0:
             rodada.tentativas -= 1
 
-
         # Adiciona o objeto modificado à sessão para preparar a atualização.
         session.add(rodada)
         
@@ -95,6 +95,7 @@ class RodadaService(metaclass=SingletonMeta):
 
         # 2. Obter a coordenada correta
         coordenada = session.get(Coordenada, rodada_atual.id_coordenada)
+        imagem = session.get(Imagem, rodada_atual.id_imagem)
         if not coordenada:
             raise ValueError("Coordenada não encontrada para a rodada.")
         
@@ -102,7 +103,9 @@ class RodadaService(metaclass=SingletonMeta):
         # 3. Montar e retornar um dicionário com os dados
         dados_rodada = {
             "local": f"{coordenada.lat},{coordenada.lng}",
-            "blur_level": blur_level
+            "blur_level": blur_level,
+            "imagem": imagem.path,
+            "id_rodada": rodada_atual.id,
         }
         
         return dados_rodada
