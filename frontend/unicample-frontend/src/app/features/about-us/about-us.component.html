@@ -1,0 +1,10 @@
+<div class="modal-content">
+  <button class="close-button" (click)="onCloseButtonClick()">X</button>
+  <h2 class="modal-title">{{ title }}</h2>
+
+  <div class="modal-body">
+    <p *ngFor="let paragraph of paragraphs">
+      {{ paragraph }}
+    </p>
+  </div>
+</div>

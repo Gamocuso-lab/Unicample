@@ -25,4 +25,7 @@
   <div class="modal-backdrop" [ngClass]="{ 'is-active': showRankingModal }">
     <app-ranking (closeModal)="onCloseRankingModal()"></app-ranking>
   </div>
+  <div class="modal-backdrop" [ngClass]="{ 'is-active': showAboutUsModal }">
+    <app-about-us (closeModal)="onCloseAboutUsModal()"></app-about-us>
+  </div>
 </div>

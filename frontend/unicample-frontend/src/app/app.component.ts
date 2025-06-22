@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { Home } from './home/home';
+import { Home } from './features/home/home';
 
 @Component({
   selector: 'app-root',

@@ -1,11 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RankingComponent } from '../ranking/ranking.component';
+import { AboutUsComponent } from '../about-us/about-us.component';
+
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RankingComponent],
+  imports: [CommonModule, RankingComponent, AboutUsComponent],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
@@ -55,6 +57,7 @@ export class Home implements OnInit, OnDestroy {
   private readonly INTERVAL_TIME_MS = 5000;
 
   showRankingModal: boolean = false;
+  showAboutUsModal: boolean = false;
 
   ngOnInit(): void {
     this.startCarousel();
@@ -89,7 +92,11 @@ export class Home implements OnInit, OnDestroy {
   }
 
   onAboutUsClick(): void {
-    console.log('Botão "Sobre nós" clicado!');
+    this.showAboutUsModal = true;
+  }
+
+  onCloseAboutUsModal(): void{
+    this.showAboutUsModal = false;
   }
 
   onCloseRankingModal(): void {
