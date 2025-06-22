@@ -1,0 +1,59 @@
+.image-viewer-container {
+  position: fixed;
+  top: 20%;
+  left: 0;
+  transform: translateY(-50%);
+  z-index: 1000;
+  overflow: visible;
+}
+
+.slider-wrapper {
+  display: flex;
+  position: relative;
+  left: 0;
+}
+
+.toggle-button {
+  background-color: #42b65b;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  padding: 12px 8px;
+  cursor: pointer;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+  height: 60px;
+  align-self: center;
+  margin-right: -1px; /* Eliminar possível gap entre botão e painel */
+  
+  &:hover {
+    background-color: #42b65bdd;
+  }
+}
+
+.panel {
+  background-color: white;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+  height: auto;
+  max-height: 80vh;
+  width: 350px;
+  overflow: hidden;
+  border-radius: 0 4px 4px 0;
+}
+
+.panel-content {
+  padding: 20px;
+  
+  .image-title {
+    text-align: center;
+    font-weight: 500;
+    margin-bottom: 15px;
+  }
+  
+  img {
+    width: 100%;
+    max-height: calc(80vh - 80px);
+    object-fit: contain;
+    border-radius: 4px;
+  }
+}

@@ -1,0 +1,15 @@
+<div class="notification-container" [@notificationAnimation]="animationState">
+    <div class="notification" [ngClass]="type">
+        <div class="notification-icon">
+            <i class="fa" [ngClass]="{
+        'fa-check-circle': type === 'success',
+        'fa-exclamation-circle': type === 'error',
+        'fa-info-circle': type === 'info',
+        'fa-exclamation-triangle': type === 'warning'
+      }"></i>
+        </div>
+        <div class="notification-message">
+            {{ message }}
+        </div>
+    </div>
+</div>

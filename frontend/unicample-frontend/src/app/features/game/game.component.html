@@ -1,0 +1,20 @@
+<div class="game-container">
+<div class="game-header">
+    <img
+            src="assets/imagens/logo_unicample.png"
+            alt="Logo Unicample"
+            class="unicample-logo"
+            height="50"
+        />
+</div>
+
+  <app-image-viewer [path_imagem]="imageViewerPath"></app-image-viewer>
+
+  <app-street-view 
+    [id_jogo]="id_jogo ? id_jogo.toString() : ''" 
+    [refreshTrigger]="refreshCounter">
+  </app-street-view>
+
+<app-guess-input (guessSubmitted)="onGuessSubmitted($event)"></app-guess-input>
+
+</div>

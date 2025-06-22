@@ -1,1 +1,14 @@
-<p>image-viewer works!</p>
+<div class="image-viewer-container">
+  <div class="slider-wrapper" [@slideInOut]="isOpen ? 'open' : 'closed'">
+    <div class="panel">
+      <div class="panel-content">
+        <p class="image-title">Imagem de apoio</p>
+        <img [src]="path_imagem" style="filter: blur({{ blur }}px);" alt="Image Viewer" />
+      </div>
+    </div>
+    <button class="toggle-button" (click)="togglePanel()">
+      <span *ngIf="!isOpen">&#9654;</span>
+      <span *ngIf="isOpen">&#9664;</span>
+    </button>
+  </div>
+</div>

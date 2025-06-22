@@ -2,12 +2,14 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RankingComponent } from '../ranking/ranking.component';
 import { AboutUsComponent } from '../about-us/about-us.component';
+import { ImageViewerComponent } from '../../shared/image-viewer/image-viewer.component';
+import { JogoService } from '../../core/services/jogoService';
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RankingComponent, AboutUsComponent],
+  imports: [CommonModule, RankingComponent, AboutUsComponent, ImageViewerComponent],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
@@ -59,6 +61,8 @@ export class Home implements OnInit, OnDestroy {
   showRankingModal: boolean = false;
   showAboutUsModal: boolean = false;
 
+  constructor(private jogoService: JogoService) {}
+
   ngOnInit(): void {
     this.startCarousel();
   }
@@ -84,7 +88,7 @@ export class Home implements OnInit, OnDestroy {
   }
 
   onPlayClick(): void {
-    console.log('Botão "Jogar" clicado!');
+    window.location.href = '/game';
   }
 
   onRankingClick(): void {

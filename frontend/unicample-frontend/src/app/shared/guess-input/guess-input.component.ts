@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { LocaisService } from '../../core/services/locaisService';
 
 @Component({
   selector: 'app-guess-input',
@@ -19,7 +20,7 @@ export class GuessInputComponent implements OnInit {
   filterText: string = '';
 
   //puxar do banco de dados
-  private allLocations: string[] = [
+  private allLocations: any[] = [
     "Instituto de Física Gleb Wataghin",
     "Praça Do Ciclo Básico",
     "Biblioteca Cesar Lattes",
@@ -44,10 +45,20 @@ export class GuessInputComponent implements OnInit {
     "Restaurante Universitário"
   ];
 
-  filteredLocations: string[] = [];
+  filteredLocations: any[] = [];
+
+  constructor(private locaisService: LocaisService) {}
 
   ngOnInit(): void {
-    this.filteredLocations = [...this.allLocations];
+    this.locaisService.getLocais().subscribe({
+      next: (response: any) => {
+        this.allLocations = response;
+        this.filteredLocations = [...this.allLocations.map((loc: any) => loc.nome)];
+      },
+      error: (error) => {
+        console.error('Erro ao obter locais:', error);
+      }
+    });
   }
 
   openPanel(): void {
@@ -75,7 +86,7 @@ export class GuessInputComponent implements OnInit {
   filterLocations(): void {
     const text = this.filterText.toLowerCase();
     this.filteredLocations = this.allLocations.filter(location =>
-      location.toLowerCase().includes(text)
-    );
+      location.nome.toLowerCase().includes(text)
+    ).map(location => location.nome);
   }
 }
