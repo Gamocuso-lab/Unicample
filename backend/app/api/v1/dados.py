@@ -147,3 +147,81 @@ async def get_imagens(request: Request, session: Session = Depends(get_session))
     except Exception as e:
         print(f"Erro ao obter imagens: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Erro interno: {str(e)}")
+    
+@router.delete(base_url + "/coordenada/{coordenada_id}", response_model=dict)
+async def delete_coordenada_by_id(coordenada_id: int, request: Request, session: Session = Depends(get_session)):
+    """
+    Endpoint para deletar uma coordenada específica pelo ID.
+    """
+    try:
+        # Verificar se a coordenada existe
+        coordenada = session.get(Coordenada, coordenada_id)
+        if not coordenada:
+            raise HTTPException(status_code=404, detail=f"Coordenada com ID {coordenada_id} não encontrada")
+            
+        # Deletar a coordenada
+        session.delete(coordenada)
+        session.commit()
+        
+        return {
+            "message": f"Coordenada com ID {coordenada_id} foi deletada com sucesso",
+            "deleted_id": coordenada_id
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Erro ao deletar coordenada: {str(e)}")
+        session.rollback()  # Reverte a transação em caso de erro
+        raise HTTPException(status_code=500, detail=f"Erro interno ao deletar coordenada: {str(e)}")
+
+@router.delete(base_url + "/local/{local_id}", response_model=dict)
+async def delete_local_by_id(local_id: int, request: Request, session: Session = Depends(get_session)):
+    """
+    Endpoint para deletar um local específico pelo ID.
+    """
+    try:
+        # Verificar se o local existe
+        local = session.get(Local, local_id)
+        if not local:
+            raise HTTPException(status_code=404, detail=f"Local com ID {local_id} não encontrado")
+            
+        # Deletar o local
+        session.delete(local)
+        session.commit()
+        
+        return {
+            "message": f"Local com ID {local_id} foi deletado com sucesso",
+            "deleted_id": local_id
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Erro ao deletar local: {str(e)}")
+        session.rollback()  # Reverte a transação em caso de erro
+        raise HTTPException(status_code=500, detail=f"Erro interno ao deletar local: {str(e)}")
+
+@router.delete(base_url + "/imagem/{imagem_id}", response_model=dict)
+async def delete_imagem_by_id(imagem_id: int, request: Request, session: Session = Depends(get_session)):
+    """
+    Endpoint para deletar uma imagem específica pelo ID.
+    """
+    try:
+        # Verificar se a imagem existe
+        imagem = session.get(Imagem, imagem_id)
+        if not imagem:
+            raise HTTPException(status_code=404, detail=f"Imagem com ID {imagem_id} não encontrada")
+            
+        # Deletar a imagem
+        session.delete(imagem)
+        session.commit()
+        
+        return {
+            "message": f"Imagem com ID {imagem_id} foi deletada com sucesso",
+            "deleted_id": imagem_id
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Erro ao deletar imagem: {str(e)}")
+        session.rollback()  # Reverte a transação em caso de erro
+        raise HTTPException(status_code=500, detail=f"Erro interno ao deletar imagem: {str(e)}")

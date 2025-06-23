@@ -51,3 +51,18 @@ async def adicionar_pontuacao(
     except Exception as e:
         print(f"Erro ao adicionar pontuação ao ranking: {str(e)}")
         raise HTTPException(status_code=500, detail="Erro interno ao salvar a pontuação.")
+    
+@router.delete(base_url + "/delete", status_code=204)
+async def limpar_ranking(session: Session = Depends(get_session)):
+    """
+    Limpa todo o ranking.
+    Esta rota deve ser usada com cautela, pois remove todas as entradas do ranking.
+    """
+    try:
+        session.query(Ranking).delete()
+        session.commit()
+        print("Ranking limpo com sucesso.")
+        return {"message": "Ranking limpo com sucesso."}
+    except Exception as e:
+        print(f"Erro ao limpar ranking: {str(e)}")
+        raise HTTPException(status_code=500, detail="Erro interno ao limpar o ranking.")

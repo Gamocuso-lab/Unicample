@@ -19,6 +19,7 @@ services:
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     volumes:
       - ./app:/app/app
+      - ./tests:/app/tests  # Mapeia os testes da máquina para dentro do container
       - ./templates:/app/templates  # Mapeia os templates da máquina para dentro do container
     ports:
       - "8000:8000"
