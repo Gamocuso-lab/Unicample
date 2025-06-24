@@ -37,7 +37,7 @@
       init_db()
       </code></pre>
   </ol>
-  <h4>Popular as tabelas</h4>
+  <h4>Popular as tabelas (dados utilizado na criação das rodadas do jogo)</h4> 
   <ol>
       <li>Com o docker rodando o projeto, abra no navegador "localhost:8000/docs"</li>
       <li>Rode o endpoint "/admin/import-data" ou import_data</li>
