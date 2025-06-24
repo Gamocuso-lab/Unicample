@@ -1,3 +1,9 @@
+Grupo:
+Gabriel Moreira Cunha de Souza: 281770
+Breno Moura Pires de Oliveira: 281743
+João Vítor Albuquerque Mafra: 
+
+
 # Unicample
   <p>Unicample é uma aplicação web baseada no jogo Geoguessr, porém, limitada a alugns institutos e locais de relevância da UNICAMP.</p>
   <p>A aplicação se dá por um Backend e um Frontend, construídos em Fast API (python) + Postgres (Banco de dados) e Angular (javascript) respectivamente, além de um docker para subir o Backend localmente e facilitar o desenvolvimento em conjunto.</p>
